@@ -1,0 +1,8 @@
+{
+  "products": [
+    { "id": 1, "title": "NG Tee", "price": 690, "stock": 12, "cover": "/assets/p1.png" },
+    { "id": 2, "title": "Rx Cap", "price": 450, "stock": 8, "cover": "/assets/p2.png" }
+  ],
+  "orders": [],
+  "payments": []
+}
