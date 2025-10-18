@@ -13,10 +13,10 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouterStore } from '@ngrx/router-store';
 
-// import { productsFeature } from './state/products/products.feature';
-// import { ProductsEffects } from './state/products/products.effects';
-// import { cartFeature } from './state/cart/cart.feature';
-// import { CartEffects } from './state/cart/cart.effects';
+// import { productsFeature } from '../state/products/products.feature';
+// import { ProductsEffects } from '../state/products/products.effects';
+// import { cartFeature } from '../state/cart/cart.feature';
+// import { CartEffects } from '../state/cart/cart.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
