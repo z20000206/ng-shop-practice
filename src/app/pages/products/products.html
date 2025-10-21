@@ -1,6 +1,7 @@
 <section class="c-products">
   <header class="c-products__header">
     <h1>商品列表</h1>
+    <!-- loading$ 為 signal，需呼叫以取得值 -->
     <div class="u-status" *ngIf="loading$()">載入中...</div>
   </header>
 
@@ -19,9 +20,11 @@
     </li>
   </ul>
 
-  <hr />
-
   <h2>新增商品</h2>
+  <!-- [formGroup] 綁定到 component 的 form 屬性 -->
+  <!-- (ngSubmit) 綁定到 create() 方法 -->
+  <!-- novalidate 禁用瀏覽器內建驗證 -->
+  <!-- autocomplete="off" 關閉自動填充 -->
   <form class="c-form" [formGroup]="form" (ngSubmit)="create()" novalidate autocomplete="off">
     <label>
       名稱
@@ -31,6 +34,16 @@
         placeholder="例：ASUS Zenbook 14 OLED"
         aria-describedby="titleHint"
       />
+      <!-- form.controls['title'] 為 Reactive Forms 的語法，用來取得指定欄位的控制項 (FormControl) -->
+      <!-- 
+      touched 使用者「碰過」欄位
+      untouched 使用者「尚未碰過」欄位
+      dirty 欄位內容「有改變」
+      pristine 欄位內容「保持原樣」
+      valid 欄位「有效」 
+      invalid 欄位「無效」
+      --> 
+      <!-- 如果 title 欄位被觸碰過且無效，顯示錯誤訊息 -->
       <small
         class="c-form__error"
         *ngIf="form.controls['title'].touched && form.controls['title'].invalid"
@@ -42,11 +55,7 @@
     <label>
       價格
       <input
-        type="number"
         formControlName="price"
-        inputmode="decimal"
-        min="0"
-        step="1"
         placeholder="例：34900"
       />
       <small
@@ -77,10 +86,11 @@
 
     <label>
       圖片
+      <!-- onFileSelected 方法會處理檔案選擇事件 -->
       <input type="file" accept="image/*" (change)="onFileSelected($event)" />
       <small class="c-form__hint">選擇商品圖片（PNG、JPG、WebP）</small>
     </label>
-
+    
     <div class="c-form__preview" *ngIf="previewUrl()">
       <img [src]="previewUrl()" alt="預覽圖片" />
     </div>

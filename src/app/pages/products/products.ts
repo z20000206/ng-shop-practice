@@ -14,6 +14,7 @@ import { ProductsActions } from '../../../state/products/products.actions';
   styleUrl: './products.scss',
 })
 export class Products implements OnInit {
+  // private 用於 DI 注入 Store 與 FormBuilder 服務
   private store = inject(Store);
   private fb = inject(FormBuilder);
 
@@ -21,7 +22,7 @@ export class Products implements OnInit {
   products$ = this.store.selectSignal(selectAllProducts);
   loading$ = this.store.selectSignal(productsFeature.selectLoading);
 
-  // 新增商品表單（逐行解釋）
+  // 建立 FormGroup(商品表單)，用來做狀態管理、資料同步、表單驗證
   form = this.fb.group({
     title: ['', [Validators.required, Validators.maxLength(50)]], // 名稱必填
     price: [0, [Validators.required, Validators.min(0)]], // 價格 >= 0
@@ -29,7 +30,7 @@ export class Products implements OnInit {
     cover: [''], // 圖片 URL（可空）
   });
 
-  // ⬇️ 新增：圖片預覽用（也可直接顯示 base64 畫面）
+  // 圖片預覽用（也可直接顯示 base64 畫面）
   previewUrl = signal<string | undefined>(undefined);
 
   ngOnInit(): void {
@@ -38,10 +39,11 @@ export class Products implements OnInit {
 
   // 處理 <input type="file"> 選檔，將檔案轉為 base64 並寫入 form.cover
   onFileSelected(event: Event): void {
+    // 取得 input 元素
     const input = event.target as HTMLInputElement;
     if (!input.files?.length) return;
-
     const file = input.files[0];
+    // 使用 FileReader 讀取檔案
     const reader = new FileReader();
 
     reader.onload = () => {

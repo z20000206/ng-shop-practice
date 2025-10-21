@@ -31,7 +31,7 @@
   }
 
   &__item {
-    flex: 1 1 calc(25% - 1.5rem);
+    width: calc(25% - 1.5rem);
     display: flex;
     flex-direction: column;
     background: #fff;
