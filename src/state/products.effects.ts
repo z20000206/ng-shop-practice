@@ -19,6 +19,7 @@ import { catchError, map, mergeMap, of } from 'rxjs';
 
 @Injectable()
 export class ProductsEffects {
+  // inject 依賴注入 Actions 和 ProductsService
   private actions$ = inject(Actions);
   private api = inject(ProductsService);
 
@@ -37,11 +38,20 @@ export class ProductsEffects {
 
   // 新增產品的 Effect
   create$ = createEffect(() =>
+    // 監聽 create Action
+    // pipe 中處理非同步邏輯
     this.actions$.pipe(
+      // ofType() 在 actions 流中篩選出特定類型的 Action
+      // ofType 過濾出 create Action
       ofType(ProductsActions.create),
+      // 使用 mergeMap 處理「非同步行為」的轉換運算子，會同時展開多個內層請求，不會互相取消。
+      // 從 Action 中取得 dto，並呼叫 API 進行新增
       mergeMap(({ dto }) =>
+        // 呼叫 ProductsService 的 create 方法
         this.api.create(dto).pipe(
+          // 成功時，回傳 createSuccess Action 並帶上新增的產品資料
           map(item => ProductsActions.createSuccess({ item })),
+          // 失敗時，回傳 createFailure Action 並帶上錯誤資訊
           catchError(error => of(ProductsActions.createFailure({ error })))
         )
       )

@@ -1,3 +1,4 @@
+// 商品資料型別
 export interface Product {         // 商品資料型別
   id: number;                      // 主鍵（json-server 自動產生）
   title: string;                   // 名稱
