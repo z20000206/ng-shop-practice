@@ -1,7 +1,13 @@
 {
   "products": [
-    { "id": 1, "title": "NG Tee", "price": 690, "stock": 12, "cover": "/assets/p1.png" },
-    { "id": 2, "title": "Rx Cap", "price": 450, "stock": 8, "cover": "/assets/p2.png" }
+    { "id": 1, "title": "ASUS Zenbook 14 OLED", "price": 34900, "stock": 8, "cover": "/assets/p1.png" },
+    { "id": 2, "title": "Acer Swift Go 14", "price": 28900, "stock": 10, "cover": "/assets/p2.png" },
+    { "id": 3, "title": "MSI Prestige 13 Evo", "price": 39900, "stock": 6, "cover": "/assets/p3.png" },
+    { "id": 4, "title": "HP Spectre x360 14", "price": 42900, "stock": 5, "cover": "/assets/p4.png" },
+    { "id": 5, "title": "Lenovo Yoga Slim 7i", "price": 31900, "stock": 9, "cover": "/assets/p5.png" },
+    { "id": 6, "title": "Dell XPS 13 Plus", "price": 45900, "stock": 4, "cover": "/assets/p6.png" },
+    { "id": 7, "title": "Apple MacBook Air M2", "price": 38900, "stock": 7, "cover": "/assets/p7.png" },
+    { "id": 8, "title": "Gigabyte AERO 14 OLED", "price": 46900, "stock": 3, "cover": "/assets/p8.png" }
   ],
   "orders": [],
   "payments": []
