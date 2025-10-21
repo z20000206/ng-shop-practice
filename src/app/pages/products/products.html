@@ -1,1 +1,90 @@
-<p>products works!</p>
+<section class="c-products">
+  <header class="c-products__header">
+    <h1>商品列表</h1>
+    <div class="u-status" *ngIf="loading$()">載入中...</div>
+  </header>
+
+  <ul class="c-products__list">
+    <li class="c-products__item" *ngFor="let p of products$()">
+      <img class="c-products__cover" [src]="p.cover || 'https://placehold.co/80'" alt="" />
+      <div class="c-products__meta">
+        <h3 class="c-products__title">{{ p.title }}</h3>
+        <div class="c-products__price">${{ p.price }}</div>
+        <div class="c-products__stock">庫存：{{ p.stock }}</div>
+      </div>
+      <div class="c-products__ops">
+        <a [routerLink]="['/products', p.id]">編輯</a>
+        <button (click)="remove(p.id)">刪除</button>
+      </div>
+    </li>
+  </ul>
+
+  <hr />
+
+  <h2>新增商品</h2>
+  <form class="c-form" [formGroup]="form" (ngSubmit)="create()" novalidate autocomplete="off">
+    <label>
+      名稱
+      <input
+        formControlName="title"
+        required
+        placeholder="例：ASUS Zenbook 14 OLED"
+        aria-describedby="titleHint"
+      />
+      <small
+        class="c-form__error"
+        *ngIf="form.controls['title'].touched && form.controls['title'].invalid"
+      >
+        請輸入名稱
+      </small>
+    </label>
+
+    <label>
+      價格
+      <input
+        type="number"
+        formControlName="price"
+        inputmode="decimal"
+        min="0"
+        step="1"
+        placeholder="例：34900"
+      />
+      <small
+        class="c-form__error"
+        *ngIf="form.controls['price'].touched && form.controls['price'].invalid"
+      >
+        價格需為 0 以上數字
+      </small>
+    </label>
+
+    <label>
+      庫存
+      <input
+        type="number"
+        formControlName="stock"
+        inputmode="numeric"
+        min="0"
+        step="1"
+        placeholder="例：8"
+      />
+      <small
+        class="c-form__error"
+        *ngIf="form.controls['stock'].touched && form.controls['stock'].invalid"
+      >
+        庫存需為 0 以上整數
+      </small>
+    </label>
+
+    <label>
+      圖片
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+      <small class="c-form__hint">選擇商品圖片（PNG、JPG、WebP）</small>
+    </label>
+
+    <div class="c-form__preview" *ngIf="previewUrl()">
+      <img [src]="previewUrl()" alt="預覽圖片" />
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">建立</button>
+  </form>
+</section>
