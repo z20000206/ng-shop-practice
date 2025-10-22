@@ -1,1 +1,82 @@
-<p>product-detail works!</p>
+<!-- routerLink：Angular 路由指令，點擊不重整，導到 /products -->
+<a routerLink="/products" class="c-form__back">← 返回列表</a>
+
+<h1 class="c-form__title">商品編輯 #{{ id }}</h1> <!-- {{}}：插值語法，從 TS 讀取 id -->
+
+<!-- [formGroup]：把 Reactive Form 綁到這個 <form>
+     (ngSubmit)：Angular 事件繫結，表單 submit 時呼叫 save() -->
+<form [formGroup]="form" (ngSubmit)="save()" class="c-form">
+
+  <!-- formControlName：把此 input 綁到 form 裡的 title 控制項 -->
+  <label class="c-form__label">
+    名稱
+    <input
+      type="text"
+      formControlName="title"
+      class="c-form__input"
+      placeholder="請輸入商品名稱" />
+    <!-- *ngIf：結構指令；當控制項被點過且無效時顯示錯誤 -->
+    <small class="c-form__error"
+           *ngIf="form.controls['title'].touched && form.controls['title'].invalid">
+      名稱為必填，且長度不可超過 50 字。
+    </small>
+  </label>
+
+  <!-- formControlName：price 控制項；[min]/[step] -->
+  <label class="c-form__label">
+    價格
+    <input
+      type="number"
+      formControlName="price"
+      class="c-form__input"
+      min="0"
+      step="1"
+      placeholder="例：34900" />
+    <small class="c-form__error"
+           *ngIf="form.controls['price'].touched && form.controls['price'].invalid">
+      價格需為 0 以上數字。
+    </small>
+  </label>
+
+  <!-- formControlName：stock 控制項 -->
+  <label class="c-form__label">
+    庫存
+    <input
+      type="number"
+      formControlName="stock"
+      class="c-form__input"
+      min="0"
+      step="1"
+      placeholder="例：10" />
+    <small class="c-form__error"
+           *ngIf="form.controls['stock'].touched && form.controls['stock'].invalid">
+      庫存需為 0 以上數字。
+    </small>
+  </label>
+
+  <!-- 檔案上傳（與清單頁一致）
+       (change)="onFileSelected($event)"：Angular 事件繫結，將選檔事件丟給 TS 方法 -->
+  <label class="c-form__label">
+    圖片
+    <input
+      type="file"
+      accept="image/*"
+      (change)="onFileSelected($event)"
+      class="c-form__input" />
+    <small class="c-form__hint">選擇商品圖片（PNG、JPG、WebP）</small>
+  </label>
+
+  <!-- 即時預覽（優先顯示 previewUrl()，否則用資料中的 cover）
+       *ngIf：有任一圖片來源才渲染節點
+       [src]：屬性繫結，把 TS 的字串綁到 <img> 的 src 屬性 -->
+  <div class="c-form__preview" *ngIf="previewUrl() || product$()?.cover">
+    <img
+      [src]="previewUrl() || product$()?.cover || 'https://placehold.co/120'"
+      alt="預覽圖片" />
+  </div>
+
+  <!-- [disabled]="form.invalid"：屬性繫結；表單無效時禁用按鈕 -->
+  <button type="submit" [disabled]="form.invalid" class="c-form__submit">
+    儲存
+  </button>
+</form>
